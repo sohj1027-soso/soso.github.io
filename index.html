@@ -5,24 +5,71 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>심리 테스트 메인 페이지</title>
 <style>
-  body { font-family: '맑은 고딕', Arial, sans-serif; max-width: 480px; margin: 20px auto; padding: 10px; text-align: center; }
-  h1 { margin-bottom: 30px; }
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+  body {
+    font-family: 'Noto Sans KR', '맑은 고딕', Arial, sans-serif;
+    max-width: 480px;
+    margin: 40px auto;
+    padding: 20px 30px;
+    background: linear-gradient(135deg, #f0f4ff, #d9e6ff);
+    color: #2c3e50;
+    box-shadow: 0 0 20px rgba(0,0,50,0.1);
+    border-radius: 14px;
+    text-align: center;
+  }
+
+  h1 {
+    font-weight: 700;
+    font-size: 2.1rem;
+    margin-bottom: 40px;
+    letter-spacing: 1.3px;
+    color: #1a2a55;
+  }
+
   button {
     display: block;
     width: 100%;
-    max-width: 300px;
-    margin: 10px auto;
-    padding: 15px 0;
-    font-size: 18px;
-    cursor: pointer;
-    border-radius: 8px;
-    border: 2px solid #333;
-    background: white;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  button:hover {
-    background-color: #333;
+    max-width: 320px;
+    margin: 15px auto;
+    padding: 16px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
     color: white;
+    background: linear-gradient(90deg, #7aaaff 0%, #a2c4ff 100%);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(122,170,255,0.5);
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
+    user-select: none;
+  }
+
+  button:hover {
+    background: linear-gradient(90deg, #a2c4ff 0%, #7aaaff 100%);
+    box-shadow: 0 9px 18px rgba(122,170,255,0.8);
+    transform: translateY(-3px);
+  }
+
+  button:active {
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 520px) {
+    body {
+      padding: 20px;
+      margin: 20px auto;
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+    }
+    button {
+      font-size: 1rem;
+      max-width: 100%;
+      padding: 14px 0;
+      margin: 12px auto;
+    }
   }
 </style>
 </head>
