@@ -5,81 +5,110 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>심리 테스트 메인 페이지</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Noto+Sans+KR&display=swap');
 
+  /* 기본 바디 스타일 */
   body {
-    font-family: 'Noto Sans KR', '맑은 고딕', Arial, sans-serif;
+    font-family: 'Noto Sans KR', 'Nanum Gothic', '맑은 고딕', Arial, sans-serif;
     max-width: 480px;
-    margin: 40px auto;
-    padding: 20px 30px;
-    background: linear-gradient(135deg, #f0f4ff, #d9e6ff);
-    color: #2c3e50;
-    box-shadow: 0 0 20px rgba(0,0,50,0.1);
-    border-radius: 14px;
+    margin: 50px auto;
+    padding: 30px 35px;
+    background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+    color: #1e2a4d;
+    box-shadow: 0 0 25px rgba(30,42,77,0.12);
+    border-radius: 18px;
     text-align: center;
   }
 
+  /* 제목 */
   h1 {
-    font-weight: 700;
-    font-size: 2.1rem;
-    margin-bottom: 40px;
-    letter-spacing: 1.3px;
-    color: #1a2a55;
+    font-weight: 900;
+    font-size: 2.4rem;
+    margin-bottom: 24px;
+    letter-spacing: 1.5px;
+    background: linear-gradient(90deg, #4169e1, #89c9ff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
+  /* 부제 또는 안내 문구 */
+  p.subtitle {
+    font-weight: 500;
+    font-size: 1.15rem;
+    color: #334a7d;
+    margin-bottom: 40px;
+    line-height: 1.5;
+  }
+
+  /* 버튼 스타일 */
   button {
     display: block;
     width: 100%;
-    max-width: 320px;
-    margin: 15px auto;
-    padding: 16px 0;
-    font-size: 1.1rem;
+    max-width: 340px;
+    margin: 16px auto;
+    padding: 18px 0;
+    font-size: 1.15rem;
     font-weight: 600;
     color: white;
-    background: linear-gradient(90deg, #7aaaff 0%, #a2c4ff 100%);
+    background: linear-gradient(135deg, #607d8b, #42a5f5);
     border: none;
-    border-radius: 10px;
-    box-shadow: 0 6px 12px rgba(122,170,255,0.5);
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(66,165,245,0.5);
     cursor: pointer;
-    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
+    transition:
+      background 0.4s ease,
+      box-shadow 0.3s ease,
+      transform 0.15s ease;
     user-select: none;
   }
 
   button:hover {
-    background: linear-gradient(90deg, #a2c4ff 0%, #7aaaff 100%);
-    box-shadow: 0 9px 18px rgba(122,170,255,0.8);
-    transform: translateY(-3px);
+    background: linear-gradient(135deg, #42a5f5, #90caf9);
+    box-shadow: 0 12px 28px rgba(66,165,245,0.7);
+    transform: translateY(-4px);
   }
 
   button:active {
     transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(66,165,245,0.4);
   }
 
+  /* 반응형 */
   @media (max-width: 520px) {
     body {
-      padding: 20px;
-      margin: 20px auto;
+      padding: 25px 20px;
+      margin: 30px auto;
     }
     h1 {
-      font-size: 1.8rem;
+      font-size: 2rem;
+    }
+    p.subtitle {
+      font-size: 1rem;
       margin-bottom: 30px;
     }
     button {
       font-size: 1rem;
       max-width: 100%;
-      padding: 14px 0;
-      margin: 12px auto;
+      padding: 16px 0;
+      margin: 14px auto;
     }
   }
 </style>
 </head>
 <body>
 
-<h1>심리 테스트에 오신 걸 환영합니다!</h1>
+<!-- 페이지 타이틀 -->
+<h1>나를 더 잘 이해하는 시간</h1>
 
+<!-- 부제 (원하면 제거 가능) -->
+<p class="subtitle">다양한 심리 테스트를 통해 나의 성향을 발견하고,  
+재미있고 깊이 있는 인사이트를 얻어보세요!</p>
+
+<!-- 테스트 선택 버튼들 -->
 <button onclick="location.href='egen_teto.html'">에겐/테토 테스트</button>
 <button onclick="location.href='dopa_sero.html'">도파/세로 테스트</button>
-<button onclick="location.href='movie_recommend.html'">성격으로 보는 나랑 잘 어울리는 영화 추천</button>
+<!--<button onclick="location.href='movie_recommend.html'">성격으로 보는 나랑 잘 어울리는 영화 추천</button>-->
 <button onclick="location.href='ideal_type_tournament.html'">이상형 월드컵</button>
 
 </body>
