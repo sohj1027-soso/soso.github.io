@@ -65,6 +65,7 @@
   }
 
   #result {
+    display: none;
     margin-top: 35px;
     padding: 25px 30px;
     background: #ffffffcc;
@@ -161,6 +162,7 @@ function showQuestion() {
 function showResult() {
   const resultDiv = document.getElementById("result");
   document.getElementById("quiz").style.display = "none";
+  resultDiv.style.display = "block";
 
   const diff = scores.dopa - scores.sero;
 
