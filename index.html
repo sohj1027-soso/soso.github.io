@@ -5,95 +5,94 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>심리 테스트 메인 페이지</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Noto+Sans+KR&display=swap');
+  /* 폰트 통일 - 'Noto Sans KR'로만 */
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
-  /* 기본 바디 스타일 */
-  body {
-    font-family: 'Noto Sans KR', 'Nanum Gothic', '맑은 고딕', Arial, sans-serif;
+    body {
+    font-family: 'Noto Sans KR', '맑은 고딕', Arial, sans-serif;
     max-width: 480px;
     margin: 50px auto;
     padding: 30px 35px;
-    background: linear-gradient(145deg, #e3f2fd, #bbdefb);
-    color: #1e2a4d;
-    box-shadow: 0 0 25px rgba(30,42,77,0.12);
+    background: linear-gradient(145deg, #cce4ff, #eaf4ff); /* 좀 더 밝고 산뜻한 블루톤 */
+    color: #1a2a55; /* 진한 블루톤 */
+    box-shadow: 0 0 25px rgba(30, 42, 77, 0.15);
     border-radius: 18px;
     text-align: center;
-  }
+    }
 
-  /* 제목 */
-  h1 {
+    /* 제목 - 좀 더 또렷하게 */
+    h1 {
     font-weight: 900;
-    font-size: 2.4rem;
-    margin-bottom: 24px;
-    letter-spacing: 1.5px;
-    background: linear-gradient(90deg, #4169e1, #89c9ff);
+    font-size: 2.6rem;
+    margin-bottom: 20px;
+    letter-spacing: 1.7px;
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-  }
+    text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
 
-  /* 부제 또는 안내 문구 */
-  p.subtitle {
-    font-weight: 500;
-    font-size: 1.15rem;
-    color: #334a7d;
-    margin-bottom: 40px;
-    line-height: 1.5;
-  }
+    /* 부제 - 선명한 진한 파랑으로 */
+    p.subtitle {
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #2e406d;
+    margin-bottom: 50px;
+    line-height: 1.6;
+    }
 
-  /* 버튼 스타일 */
-  button {
+    /* 버튼 스타일 - 좀 더 입체감, 산뜻한 하늘색 계열 */
+    button {
     display: block;
     width: 100%;
-    max-width: 340px;
-    margin: 16px auto;
+    max-width: 360px;
+    margin: 20px auto;
     padding: 18px 0;
-    font-size: 1.15rem;
-    font-weight: 600;
+    font-size: 1.2rem;
+    font-weight: 700;
     color: white;
-    background: linear-gradient(135deg, #607d8b, #42a5f5);
+    background: linear-gradient(135deg, #3b82f6, #60a5fa);
     border: none;
     border-radius: 14px;
-    box-shadow: 0 8px 20px rgba(66,165,245,0.5);
+    box-shadow: 0 10px 20px rgba(59,130,246,0.6);
     cursor: pointer;
-    transition:
-      background 0.4s ease,
-      box-shadow 0.3s ease,
-      transform 0.15s ease;
+    transition: background 0.4s ease, box-shadow 0.3s ease, transform 0.15s ease;
     user-select: none;
-  }
+    }
 
-  button:hover {
-    background: linear-gradient(135deg, #42a5f5, #90caf9);
-    box-shadow: 0 12px 28px rgba(66,165,245,0.7);
-    transform: translateY(-4px);
-  }
+    button:hover {
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    box-shadow: 0 14px 30px rgba(59,130,246,0.8);
+    transform: translateY(-5px);
+    }
 
-  button:active {
+    button:active {
     transform: translateY(-1px);
-    box-shadow: 0 6px 15px rgba(66,165,245,0.4);
-  }
+    box-shadow: 0 8px 16px rgba(59,130,246,0.5);
+    }
 
-  /* 반응형 */
-  @media (max-width: 520px) {
+    /* 반응형 유지 */
+    @media (max-width: 520px) {
     body {
-      padding: 25px 20px;
-      margin: 30px auto;
+        padding: 25px 20px;
+        margin: 30px auto;
     }
     h1 {
-      font-size: 2rem;
+        font-size: 2.3rem;
     }
     p.subtitle {
-      font-size: 1rem;
-      margin-bottom: 30px;
+        font-size: 1.1rem;
+        margin-bottom: 40px;
     }
     button {
-      font-size: 1rem;
-      max-width: 100%;
-      padding: 16px 0;
-      margin: 14px auto;
+        font-size: 1.1rem;
+        max-width: 100%;
+        padding: 16px 0;
+        margin: 18px auto;
     }
-  }
+    }
+
 </style>
 </head>
 <body>
