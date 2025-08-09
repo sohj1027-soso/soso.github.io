@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>이상형 월드컵</title>
+<style>
+  body { font-family: '맑은 고딕', Arial, sans-serif; max-width: 480px; margin: 20px auto; padding: 10px; text-align: center; }
+  h1 { margin-bottom: 20px; }
+  .images { display: flex; justify-content: space-around; margin-bottom: 20px; }
+  .images img {
+    width: 45%;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 3px solid transparent;
+    transition: border-color 0.3s;
+  }
+  .images img:hover {
+    border-color: #333;
+  }
+  #result {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 20px;
+  }
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<h1>이상형 월드컵</h1>
+
+<div class="images" id="choices">
+  <img src="https://via.placeholder.com/200x200?text=1" alt="1" onclick="choose(0)" />
+  <img src="https://via.placeholder.com/200x200?text=2" alt="2" onclick="choose(1)" />
+</div>
+
+<div id="result"></div>
+
+<button onclick="location.href='index.html'">← 메인으로 돌아가기</button>
+
+<script>
+const items = [
+  "사람 A",
+  "사람 B",
+  "사람 C",
+  "사람 D"
+];
+
+let round = 0;
+let selected = [];
+
+function choose(index) {
+  selected.push(items[round * 2 + index]);
+  round++;
+  if (round >= items.length / 2) {
+    showResult();
+  } else {
+    showNextRound();
+  }
+}
+
+function showNextRound() {
+  const choicesDiv = document.getElementById("choices");
+  choicesDiv.innerHTML = `
+    <img src="https://via.placeholder.com/200x200?text=${round*2+1}" alt="${round*2+1}" onclick="choose(0)" />
+    <img src="https://via.placeholder.com/200x200?text=${round*2+2}" alt="${round*2+2}" onclick="choose(1)" />
+  `;
+}
+
+function showResult() {
+  document.getElementById("choices").style.display = "none";
+  document.getElementById("result").textContent = "당신의 이상형은: " + selected[0] + "!";
+}
+</script>
+
+</body>
+</html>

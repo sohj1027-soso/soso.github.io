@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>성격별 영화 추천</title>
+<style>
+  body { font-family: '맑은 고딕', Arial, sans-serif; max-width: 480px; margin: 20px auto; padding: 10px; }
+  h1 { text-align: center; }
+  ul { list-style: none; padding: 0; }
+  li { margin: 10px 0; }
+  a { color: #3366cc; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<h1>성격으로 보는 영화 추천</h1>
+
+<p>간단한 성격 질문 후 추천 영화 확인!</p>
+
+<button onclick="showMovies('active')">활발한 성격</button>
+<button onclick="showMovies('calm')">차분한 성격</button>
+
+<ul id="movieList"></ul>
+
+<button onclick="location.href='index.html'">← 메인으로 돌아가기</button>
+
+<script>
+const movies = {
+  active: [
+    "가디언즈 오브 갤럭시",
+    "인셉션",
+    "어벤져스"
+  ],
+  calm: [
+    "그랜드 부다페스트 호텔",
+    "이터널 선샤인",
+    "라라랜드"
+  ]
+};
+
+function showMovies(type) {
+  const list = document.getElementById("movieList");
+  list.innerHTML = "";
+  movies[type].forEach(movie => {
+    const li = document.createElement("li");
+    li.textContent = movie;
+    list.appendChild(li);
+  });
+}
+</script>
+
+</body>
+</html>
