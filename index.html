@@ -1,11 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>웹페이지</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>에겐/테토 심리테스트</title>
+<style>
+  body { font-family: '맑은 고딕', Arial, sans-serif; max-width: 480px; margin: 20px auto; padding: 10px; }
+  h1 { text-align: center; }
+  .question { margin: 20px 0; }
+  button { margin: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; }
+  #result { margin-top: 30px; font-weight: bold; font-size: 18px; }
+</style>
 </head>
 <body>
-    <h1>hello</h1>
-    <p>testpage</p>
+
+<h1>에겐/테토 심리테스트</h1>
+
+<div id="quiz">
+  <!-- 질문과 버튼이 여기 나타납니다 -->
+</div>
+
+<div id="result"></div>
+
+<script>
+const questions = [
+  {
+    text: "1. 친구들과 있을 때 나는 주로?",
+    options: [
+      { text: "이야기를 많이 한다 (에겐)", type: "egen" },
+      { text: "조용히 듣는 편이다 (테토)", type: "teto" }
+    ]
+  },
+  {
+    text: "2. 새로운 환경에 들어가면?",
+    options: [
+      { text: "먼저 다가가서 친해진다 (에겐)", type: "egen" },
+      { text: "관찰하며 천천히 적응한다 (테토)", type: "teto" }
+    ]
+  },
+  {
+    text: "3. 스트레스를 받을 때 나는?",
+    options: [
+      { text: "친구에게 털어놓는다 (에겐)", type: "egen" },
+      { text: "혼자 조용히 생각한다 (테토)", type: "teto" }
+    ]
+  }
+];
+
+let current = 0;
+let scores = { egen: 0, teto: 0 };
+
+function showQuestion() {
+  const quizDiv = document.getElementById("quiz");
+  quizDiv.innerHTML = "";
+
+  if (current >= questions.length) {
+    showResult();
+    return;
+  }
+
+  const q = questions[current];
+  const qElem = document.createElement("div");
+  qElem.className = "question";
+  qElem.innerHTML = `<p>${q.text}</p>`;
+
+  q.options.forEach((opt, idx) => {
+    const btn = document.createElement("button");
+    btn.textContent = opt.text;
+    btn.onclick = () => {
+      scores[opt.type]++;
+      current++;
+      showQuestion();
+    };
+    qElem.appendChild(btn);
+  });
+
+  quizDiv.appendChild(qElem);
+}
+
+function showResult() {
+  const resultDiv = document.getElementById("result");
+  let resultText = "";
+
+  if (scores.egen > scores.teto) {
+    resultText = "당신은 에겐 유형입니다! 활발하고 외향적인 성격이에요.";
+  } else if (scores.teto > scores.egen) {
+    resultText = "당신은 테토 유형입니다! 차분하고 내향적인 성격이에요.";
+  } else {
+    resultText = "에겐과 테토가 비슷한 균형 잡힌 성격이에요.";
+  }
+
+  document.getElementById("quiz").style.display = "none";
+  resultDiv.textContent = resultText;
+}
+
+showQuestion();
+</script>
+
 </body>
 </html>
