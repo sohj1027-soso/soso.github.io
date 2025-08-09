@@ -5,46 +5,125 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>에겐/테토 심리테스트</title>
 <style>
-  body { font-family: '맑은 고딕', Arial, sans-serif; max-width: 480px; margin: 20px auto; padding: 10px; }
-  h1 { text-align: center; }
-  .question { margin: 20px 0; }
-  button { margin: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; }
-  #result { margin-top: 30px; font-weight: bold; font-size: 18px; }
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+  /* 기본 스타일 */
+  body {
+    font-family: 'Noto Sans KR', '맑은 고딕', Arial, sans-serif;
+    max-width: 480px;
+    margin: 30px auto;
+    padding: 20px 30px;
+    background: linear-gradient(135deg, #f0f4ff, #d9e6ff);
+    color: #222;
+    box-shadow: 0 0 15px rgba(0,0,50,0.1);
+    border-radius: 12px;
+  }
+
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+  }
+
+  .question {
+    margin-bottom: 25px;
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  }
+
+  .question p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 18px;
+    color: #34495e;
+  }
+
+  .option-btn {
+    display: block;
+    width: 100%;
+    padding: 12px 18px;
+    margin-bottom: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #2c3e50;
+    background: linear-gradient(90deg, #a2c4ff 0%, #7aaaff 100%);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(122,170,255,0.4);
+    transition: background 0.3s ease, transform 0.15s ease;
+    user-select: none;
+  }
+
+  .option-btn:hover {
+    background: linear-gradient(90deg, #7aaaff 0%, #a2c4ff 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(122,170,255,0.6);
+  }
+
+  #result {
+    margin-top: 35px;
+    padding: 25px 30px;
+    background: #ffffffcc;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    font-size: 1.05rem;
+    line-height: 1.5;
+    white-space: pre-line;
+    color: #2c3e50;
+  }
+
+  /* 반응형 조정 */
+  @media (max-width: 520px) {
+    body {
+      padding: 15px 20px;
+      margin: 15px auto;
+    }
+    .question {
+      padding: 15px 18px;
+    }
+    .option-btn {
+      font-size: 0.95rem;
+      padding: 10px 14px;
+    }
+    #result {
+      font-size: 1rem;
+      padding: 20px 22px;
+    }
+  }
 </style>
 </head>
 <body>
 
 <h1>에겐/테토 심리테스트</h1>
 
-<div id="quiz">
-  <!-- 질문과 버튼이 여기 나타납니다 -->
-</div>
-
+<div id="quiz"></div>
 <div id="result"></div>
 
 <script>
 const questions = [
-  {
-    text: "1. 친구들과 있을 때 나는 주로?",
-    options: [
-      { text: "이야기를 많이 한다 (에겐)", type: "egen" },
-      { text: "조용히 듣는 편이다 (테토)", type: "teto" }
-    ]
-  },
-  {
-    text: "2. 새로운 환경에 들어가면?",
-    options: [
-      { text: "먼저 다가가서 친해진다 (에겐)", type: "egen" },
-      { text: "관찰하며 천천히 적응한다 (테토)", type: "teto" }
-    ]
-  },
-  {
-    text: "3. 스트레스를 받을 때 나는?",
-    options: [
-      { text: "친구에게 털어놓는다 (에겐)", type: "egen" },
-      { text: "혼자 조용히 생각한다 (테토)", type: "teto" }
-    ]
-  }
+  { text: "1. 나는 어려운 상황에서도 침착하게 문제를 해결하려고 노력한다.", type: "teto" },
+  { text: "2. 내 감정을 주변 사람들에게 솔직하게 표현하는 편이다.", type: "egen" },
+  { text: "3. 경쟁 상황에서 이기기 위해 적극적으로 도전하는 편이다.", type: "teto" },
+  { text: "4. 타인의 감정이나 기분 변화를 민감하게 알아차리는 편이다.", type: "egen" },
+  { text: "5. 문제를 해결할 때 논리적이고 직설적으로 접근한다.", type: "teto" },
+  { text: "6. 나는 상대방의 마음을 헤아리고 배려하는 데 시간을 많이 쓴다.", type: "egen" },
+  { text: "7. 어려운 결정은 빠르게 내리는 편이다.", type: "teto" },
+  { text: "8. 감정을 숨기기보다는 표현하는 게 건강하다고 생각한다.", type: "egen" },
+  { text: "9. 힘들고 어려운 상황에서도 쉽게 포기하지 않는다.", type: "teto" },
+  { text: "10. 다른 사람의 기분을 상하게 할까 봐 말하기 전에 한 번 더 생각한다.", type: "egen" }
+];
+
+const options = [
+  { text: "전혀 그렇지 않다", score: 1 },
+  { text: "별로 그렇지 않다", score: 2 },
+  { text: "보통이다", score: 3 },
+  { text: "꽤 그렇다", score: 4 },
+  { text: "매우 그렇다", score: 5 }
 ];
 
 let current = 0;
@@ -64,11 +143,12 @@ function showQuestion() {
   qElem.className = "question";
   qElem.innerHTML = `<p>${q.text}</p>`;
 
-  q.options.forEach((opt, idx) => {
+  options.forEach(opt => {
     const btn = document.createElement("button");
+    btn.className = "option-btn";
     btn.textContent = opt.text;
     btn.onclick = () => {
-      scores[opt.type]++;
+      scores[q.type] += opt.score;
       current++;
       showQuestion();
     };
@@ -80,18 +160,130 @@ function showQuestion() {
 
 function showResult() {
   const resultDiv = document.getElementById("result");
-  let resultText = "";
+  document.getElementById("quiz").style.display = "none";
 
-  if (scores.egen > scores.teto) {
-    resultText = "당신은 에겐 유형입니다! 활발하고 외향적인 성격이에요.";
-  } else if (scores.teto > scores.egen) {
-    resultText = "당신은 테토 유형입니다! 차분하고 내향적인 성격이에요.";
+  const diff = scores.egen - scores.teto;
+
+  let resultTitle = "";
+  let resultDesc = "";
+
+  if (diff >= 20) {
+    resultTitle = "매우 강한 에겐형";
+    resultDesc = `성향:
+매우 감성적이고 섬세하며 공감 능력이 뛰어납니다. 타인의 감정을 빠르게 파악하고 배려하는 데 능숙합니다.
+
+일할 때:
+팀원들의 감정을 세심히 살피고 갈등을 조율하는 역할을 맡는 경우가 많아요. 협업과 조화가 중요한 업무에 강합니다.
+
+연애할 때:
+상대방의 감정을 잘 이해하고 다정하게 챙겨주는 스타일이에요. 감정 표현도 솔직하고 애정이 깊습니다.
+
+잘 맞는 유형:
+차분하고 논리적인 ‘약한 테토형’ 혹은 ‘약한 에겐형’과 좋은 궁합을 보입니다.
+
+좋아하는 유형:
+결단력 있고 자신감 있는 ‘강한 테토형’에게 끌리는 경향이 있어요.
+
+이 유형을 좋아하는 사람:
+따뜻하고 감성적인 이 유형을 편안하게 느끼는 ‘약한 테토형’과 ‘약한 에겐형’이 많습니다.`;
+  } else if (diff >= 10) {
+    resultTitle = "강한 에겐형";
+    resultDesc = `성향:
+감성적이고 타인을 배려하는 성향이 강하며, 조화와 공감을 중요시합니다.
+
+일할 때:
+팀 내에서 중재자 역할을 잘하며, 갈등 상황에서 상대의 입장을 고려해 해결하려 합니다.
+
+연애할 때:
+상대방을 잘 챙기고, 상대의 기분을 살피며 애정 표현을 아끼지 않습니다.
+
+잘 맞는 유형:
+차분하고 결단력 있는 ‘강한 테토형’과 서로를 보완하며 균형을 이루는 경우가 많습니다.
+
+좋아하는 유형:
+자신감 넘치고 직설적인 ‘매우 강한 테토형’을 선호하는 경향이 있습니다.
+
+이 유형을 좋아하는 사람:
+친절하고 이해심 깊은 ‘약한 에겐형’과 ‘약한 테토형’이 이 유형을 편하게 느낍니다.`;
+  } else if (diff >= 1) {
+    resultTitle = "약한 에겐형";
+    resultDesc = `성향:
+감성과 논리 사이에서 균형을 이루며, 필요에 따라 부드럽고 단호한 면모를 보입니다.
+
+일할 때:
+협업과 실행 모두 무난하며, 상황에 맞게 유연하게 대처합니다.
+
+연애할 때:
+솔직한 감정 표현과 동시에 상대방을 배려하는 균형 잡힌 스타일입니다.
+
+잘 맞는 유형:
+비슷한 균형을 지닌 ‘약한 테토형’과 좋은 시너지를 냅니다.
+
+좋아하는 유형:
+자신감 있고 단호한 ‘강한 테토형’과 따뜻한 ‘강한 에겐형’ 모두에게 끌릴 수 있습니다.
+
+이 유형을 좋아하는 사람:
+중간 성향을 좋아하는 ‘약한 에겐형’ 및 ‘약한 테토형’이 많습니다.`;
+  } else if (diff >= -9) {
+    resultTitle = "약한 테토형";
+    resultDesc = `성향:
+차분하고 논리적이면서도 감성을 적절히 배합하는 균형형입니다.
+
+일할 때:
+신중하게 문제를 접근하며 팀 내에서 신뢰받는 역할을 맡습니다.
+
+연애할 때:
+과격하지 않고 조용히 상대방을 배려하는 스타일입니다.
+
+잘 맞는 유형:
+부드럽고 따뜻한 ‘약한 에겐형’과 균형이 잘 맞습니다.
+
+좋아하는 유형:
+감성적이면서도 배려심 깊은 ‘강한 에겐형’을 선호하는 편입니다.
+
+이 유형을 좋아하는 사람:
+이성적이고 차분한 ‘약한 테토형’ 및 ‘약한 에겐형’이 많습니다.`;
+  } else if (diff >= -19) {
+    resultTitle = "강한 테토형";
+    resultDesc = `성향:
+남성적이고 결단력 있으며, 직설적이고 적극적인 면이 강합니다.
+
+일할 때:
+리더십이 강하고, 문제 해결과 목표 달성에 집중합니다.
+
+연애할 때:
+자신감 있고 적극적인 스타일이며, 때로는 솔직함이 강하게 느껴질 수 있습니다.
+
+잘 맞는 유형:
+감성적이고 섬세한 ‘강한 에겐형’과 서로 보완하는 관계가 많습니다.
+
+좋아하는 유형:
+섬세하고 배려심 깊은 ‘약한 에겐형’ 혹은 ‘약한 테토형’에게 끌립니다.
+
+이 유형을 좋아하는 사람:
+강한 리더십을 편안히 받아들이는 ‘약한 에겐형’과 ‘약한 테토형’이 많습니다.`;
   } else {
-    resultText = "에겐과 테토가 비슷한 균형 잡힌 성격이에요.";
+    resultTitle = "매우 강한 테토형";
+    resultDesc = `성향:
+매우 남성적이고 도전 정신이 뛰어나며, 적극적이고 강한 추진력을 가집니다.
+
+일할 때:
+어려운 상황에서도 굴하지 않고 리더 역할을 맡아 일을 밀고 나갑니다.
+
+연애할 때:
+직설적이고 열정적이며, 상대에게 강한 관심을 표현합니다.
+
+잘 맞는 유형:
+섬세하고 감성적인 ‘매우 강한 에겐형’과 상호 보완적입니다.
+
+좋아하는 유형:
+부드럽고 공감 능력 높은 ‘강한 에겐형’을 선호하는 경향이 있습니다.
+
+이 유형을 좋아하는 사람:
+강한 추진력과 열정을 존중하는 ‘약한 에겐형’과 ‘약한 테토형’이 많습니다.`;
   }
 
-  document.getElementById("quiz").style.display = "none";
-  resultDiv.textContent = resultText;
+  resultDiv.textContent = `${resultTitle}\n\n${resultDesc}\n\n[점수]\n에겐: ${scores.egen}\n테토: ${scores.teto}\n점수 차이: ${diff}`;
 }
 
 showQuestion();
