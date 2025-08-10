@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>이상형 월드컵 – 여자 배우 16강</title>
+<style>
+  body { font-family: 'Noto Sans KR', Arial, sans-serif; max-width: 500px; margin: 30px auto; padding: 20px; text-align: center; background: #f4f7fd; }
+  h1 { margin-bottom: 10px; color: #3b4b69; }
+  h2 { margin-bottom: 20px; font-size: 1rem; color: #666; }
+  .images { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px; }
+  .images img {
+    width: 48%;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+  }
+  .images img:hover {
+    border-color: #3b4b69;
+  }
+  #result { margin-top: 20px; font-weight: bold; font-size: 1.2rem; color: #3b4b69; }
+  button { margin-top: 20px; padding: 10px 15px; font-size: 1rem; cursor: pointer; border: none; background: #3b4b69; color: white; border-radius: 6px; }
+</style>
+</head>
+<body>
+
+<h1>이상형 월드컵</h1>
+<h2 id="round-title">16강 – 당신의 선택은?</h2>
+<div class="images" id="choices"></div>
+<div id="result"></div>
+<button onclick="location.href='index.html'">← 메인으로 돌아가기</button>
+
+<script>
+const items = [
+  { name: "아이유", img: "https://i.namu.wiki/i/Zj5h33wJd3P2rVccJrJtHjJ5kzTwR6cnzSUwHxWhXyjT_Rs7oIfy5f9U81TtCe6nmhXRij7ILM8FXvgthG7x6Q.webp" },
+  { name: "송혜교", img: "https://i.namu.wiki/i/Jb9gMyhE8YeicX6qvVN6aPTIhY7GxWp1JdUEix3yEiGlm3tsZrfKkZj7nTC8CDGlk8ocIWh6jypJSv5dfD4fcg.webp" },
+  { name: "전지현", img: "https://i.namu.wiki/i/N5UheOxZ28QO0huJ0_7zdyMQF3ubgVQdT8vERa7I2DA58Wz_PZrMge9qJTX2byI-yOwvEnflasAHUk6bMgiNQA.webp" },
+  { name: "김태리", img: "https://i.namu.wiki/i/1jMQrE5nYdp9QnnZ9i4fG2VE1pzm7nYChUHo4s2OPxl6-KWmMYIN-ED7i_Fx5eMHmPzPMiDoNwhxrtZILoPj8w.webp" },
+  { name: "박신혜", img: "https://i.namu.wiki/i/ATo96iDq6chMjvmo9XWlN05p-W9P9U1LO1XODHZzFESv1Fz4cOqgP4d4hG_5k8pMO26lBtAXG_0F6TITcV6NnQ.webp" },
+  { name: "배수지", img: "https://i.namu.wiki/i/HbT3oWbux1Z1PvhGmUoAJp5k0GJ30pd1shQCCN8uLDXoQybAK2NUTa9X8Lo7tAMpLtwFHRKAt1Wc7Z6iU1wEDQ.webp" },
+  { name: "신민아", img: "https://i.namu.wiki/i/JSE_4iFSpmBlQmj31tPi6Z8zTkH45TtOtGuNsVbtTPwWsuERQYnB4oaMZPccsuPE2G0-EiKTZymYh5o4ERbn3Q.webp" },
+  { name: "김고은", img: "https://i.namu.wiki/i/TWWPLNmVDfMNfGj7ZoeE-z7TTgM5G5jru2H2tQdr5L9n9dNszAe9j4Y2JTZ-Q2uOEOnNlyrPPwETxz8NaPQxHg.webp" },
+  { name: "손예진", img: "https://i.namu.wiki/i/17No4kbNWpdvx1KTZcK_SquMtF4XnLjbN2DKWwsW2oZb1aunBbiTu4Ev6G51TXFLUbfXdiCEPhfK53WKy3tC1A.webp" },
+  { name: "김태희", img: "https://i.namu.wiki/i/j8gC8Quq2twbm1I_3QXZOpPSl9b9mLOkB4yzKUVYdCNjbvCr8ns7wqGR0lQdvWEr2YPczVvVpvdj2dPrKILd1g.webp" },
+  { name: "김다미", img: "https://i.namu.wiki/i/Ho3o1yG4N1hzrdRBxIlg9MkpH53fq_LRYDpNiHeBkUuwh3v3Ufw6bnpVfr8YEC5o1oToER1YtNWhh8n5UwdDmw.webp" },
+  { name: "박소담", img: "https://i.namu.wiki/i/3i9sR6yLK1Qyp1tW6lC9P1-1DnkiTFOC-fDMUjPAlAkjLQZL4gdRE-OSa9Uvx5TdYAZW2uFfXxMND9xW2r0hjA.webp" },
+  { name: "한소희", img: "https://i.namu.wiki/i/sy_SkXL8HcU3s3kKaVrAiKXggh3yW7KHScd5nbLghoB_HUvnHfFVupFcDTST7HoB1S6bQUs42ByrV9uztOEeDw.webp" },
+  { name: "하지원", img: "https://i.namu.wiki/i/5mFGyxVcxrnsmAgbWYmQLooE2kpUuKf9HGJgYWy8hPAgKte6zMLKGLaxakbYQ_Bh2djfhR2wLtgYTrj_jqVq-g.webp" },
+  { name: "김지원", img: "https://i.namu.wiki/i/zy3O8vM4emUKUVVX6v2yk4GKQXhmm6jPIEFAUuNQZ2EjUIFQOXoEzVnrvraKjkJ1t6Mdprg5bDBhcmAozZ_iSw.webp" },
+  { name: "한효주", img: "https://i.namu.wiki/i/SQdyEhTbApmQ8EVfFCqR6kp1oStk-YFrYozit1BMK79Fpx9R6H3IhMeYQ8t6GTHL-fB-HpEEnKKpETU8ZQSTgQ.webp" }
+];
+
+let currentPairs = [...items]; // 현재 라운드의 참가자들
+let nextRound = []; // 다음 라운드 진출자
+let matchIndex = 0; // 현재 경기 번호
+let roundName = "16강";
+
+function updateRoundTitle() {
+  document.getElementById("round-title").textContent = `${roundName} – 당신의 선택은?`;
+}
+
+function showMatch() {
+  const choicesDiv = document.getElementById("choices");
+  choicesDiv.innerHTML = "";
+
+  if (currentPairs.length === 1) {
+    document.getElementById("choices").innerHTML = "";
+    document.getElementById("round-title").textContent = "결과 발표";
+    document.getElementById("result").textContent = `🏆 당신의 이상형은 ${currentPairs[0].name}님입니다!`;
+    return;
+  }
+
+  const a = currentPairs[matchIndex * 2];
+  const b = currentPairs[matchIndex * 2 + 1];
+
+  [a, b].forEach(player => {
+    const img = document.createElement("img");
+    img.src = player.img;
+    img.alt = player.name;
+    img.onclick = () => selectWinner(player);
+    choicesDiv.appendChild(img);
+  });
+}
+
+function selectWinner(winner) {
+  nextRound.push(winner);
+  matchIndex++;
+
+  if (matchIndex >= currentPairs.length / 2) {
+    // 라운드 종료
+    currentPairs = [...nextRound];
+    nextRound = [];
+    matchIndex = 0;
+
+    if (currentPairs.length === 8) roundName = "8강";
+    else if (currentPairs.length === 4) roundName = "4강";
+    else if (currentPairs.length === 2) roundName = "결승";
+
+    updateRoundTitle();
+  }
+
+  showMatch();
+}
+
+// 초기 실행
+updateRoundTitle();
+showMatch();
+</script>
+
+</body>
+</html>
