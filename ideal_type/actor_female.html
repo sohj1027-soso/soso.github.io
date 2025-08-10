@@ -43,7 +43,7 @@
 <button onclick="location.href='ideal_type_main.html'">← 메인으로 돌아가기</button>
 
 <script>
-  fetch("actor_female_list.php") // 같은 폴더에 있으므로 그냥 파일명
+  fetch("actor_female_list.json") // 같은 폴더에 있으므로 그냥 파일명
     .then(res => res.json())
     .then(files => {
       if (!Array.isArray(files) || files.length === 0) {
