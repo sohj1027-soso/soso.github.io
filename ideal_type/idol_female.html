@@ -78,7 +78,7 @@
       const shuffled = files.sort(() => Math.random() - 0.5).slice(0, 32);
       const items = shuffled.map(file => ({
         name: file.replace(/\.[^/.]+$/, ""),
-        img: `idol_female_image/${file}`
+        img: `idol_female_image/${encodeURIComponent(file)}`
       }));
       startTournament(items);
     });
