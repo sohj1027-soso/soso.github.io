@@ -82,13 +82,11 @@ function startTournament(items) {
   let winners = [];
 
   function getRoundName(len) {
-    switch(len) {
-      case 16: return "16강";
-      case 8: return "8강";
-      case 4: return "4강";
-      case 2: return "결승";
-      default: return "";
-    }
+    if (len > 8) return "16강";
+    else if (len > 4) return "8강";
+    else if (len > 2) return "4강";
+    else if (len === 2) return "결승";
+    else return "";
   }
 
   function showRound() {
@@ -107,7 +105,7 @@ function startTournament(items) {
       return;
     }
 
-    roundInfoDiv.textContent = `${getRoundName(brackets.length)} 대결`;
+    roundInfoDiv.textContent = `${getRoundName(brackets.length)}`;
 
     const [a, b] = brackets;
 
