@@ -28,6 +28,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
+    margin-bottom: 30px;
   }
   .option-btn {
     padding: 15px 10px;
@@ -49,6 +50,20 @@
     cursor: not-allowed;
     transform: none;
   }
+  .home-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background: #555;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .home-btn:hover {
+    background: #777;
+  }
 </style>
 </head>
 <body>
@@ -62,6 +77,8 @@
   <button class="option-btn" disabled>남자 아이돌</button>
   <button class="option-btn" disabled>남자 배우</button>
 </div>
+
+<button class="home-btn" onclick="location.href='index.html'">홈으로 이동</button>
 
 </body>
 </html>
