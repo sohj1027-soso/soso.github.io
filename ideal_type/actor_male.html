@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>남자 배우 이상형 월드컵</title>
+<style>
+  /* 스타일은 여자 배우 버전과 비슷하게 유지, 색상만 변경 */
+  body { font-family: '맑은 고딕', Arial, sans-serif; max-width: 500px; margin: 20px auto; padding: 10px; text-align: center; }
+  h1 { margin-bottom: 10px; color: #4caf50; }
+  h2 { margin-bottom: 20px; color: #555; font-weight: normal; }
+  .images { display: flex; justify-content: space-around; margin-bottom: 20px; }
+  .choice {
+    cursor: pointer;
+    border-radius: 8px;
+    border: 3px solid transparent;
+    transition: transform 0.3s, border-color 0.3s;
+    width: 45%;
+  }
+  .choice:hover {
+    border-color: #fb8aaf;
+    transform: scale(1.05);
+  }
+  .choice img {
+    width: 100%;
+    height: 200px;        /* 고정 높이 */
+    border-radius: 8px;
+    display: block;
+    object-fit: cover;    /* 이미지 크기 꽉 채우고 잘림 처리 */
+  }
+  .name {
+    margin-top: 8px;
+    font-weight: bold;
+    color: #333;
+    font-size: 1.1rem;
+    height: 30px;         /* 이름 영역 높이 고정 (필요시 조정) */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  #roundInfo {
+    font-weight: bold;
+    font-size: 18px;
+    color: #4caf50;
+    margin-bottom: 10px;
+  }
+  #result { font-weight: bold; font-size: 20px; margin-top: 20px; color: #2e7d32; }
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    background: #4caf50;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<h1>남자 배우 이상형 월드컵</h1>
+<h2>당신의 이상형을 선택하세요!</h2>
+
+<div id="roundInfo"></div>
+<div class="images" id="choices"></div>
+<div id="result"></div>
+
+<button onclick="location.href='ideal_type_main.html'">← 메인으로 돌아가기</button>
+
+<script>
+  fetch("actor_male_list.json")
+    .then(res => res.json())
+    .then(files => {
+      if (!Array.isArray(files) || files.length === 0) {
+        document.getElementById("result").textContent = "이미지를 불러올 수 없습니다.";
+        return;
+      }
+      const shuffled = files.sort(() => Math.random() - 0.5).slice(0, 16);
+      const items = shuffled.map(file => ({
+        name: file.replace(/\.[^/.]+$/, ""),
+        img: `actor_male_image/${file}`
+      }));
+      startTournament(items);
+    });
+
+function startTournament(items) {
+  let brackets = [...items];
+  let winners = [];
+
+  function getRoundName(len) {
+    if (len > 8) return "16강";
+    else if (len > 4) return "8강";
+    else if (len > 2) return "4강";
+    else if (len === 2) return "결승";
+    else return "";
+  }
+
+  function showRound() {
+    const choicesDiv = document.getElementById("choices");
+    const roundInfoDiv = document.getElementById("roundInfo");
+    const resultDiv = document.getElementById("result");
+
+    choicesDiv.innerHTML = "";
+    resultDiv.textContent = "";
+
+    if (brackets.length === 1) {
+      roundInfoDiv.textContent = "";
+      resultDiv.textContent = `🏆 당신의 이상형은: ${brackets[0].name}님입니다!`;
+      choicesDiv.innerHTML = `<img src="${brackets[0].img}" alt="${brackets[0].name}" style="width:80%; border-radius:8px;">`;
+      return;
+    }
+
+    roundInfoDiv.textContent = `${getRoundName(brackets.length + winners.length)}`;
+
+    const [a, b] = brackets;
+
+    const choiceA = document.createElement("div");
+    choiceA.className = "choice";
+    choiceA.onclick = () => selectWinner(a);
+    choiceA.innerHTML = `<img src="${a.img}" alt="${a.name}"><div class="name">${a.name}</div>`;
+
+    const choiceB = document.createElement("div");
+    choiceB.className = "choice";
+    choiceB.onclick = () => selectWinner(b);
+    choiceB.innerHTML = `<img src="${b.img}" alt="${b.name}"><div class="name">${b.name}</div>`;
+
+    choicesDiv.appendChild(choiceA);
+    choicesDiv.appendChild(choiceB);
+  }
+
+  function selectWinner(chosen) {
+    winners.push(chosen);
+    brackets.shift();
+    brackets.shift();
+
+    if (brackets.length === 0) {
+      brackets = [...winners];
+      winners = [];
+    }
+    showRound();
+  }
+
+  showRound();
+}
+</script>
+
+</body>
+</html>
