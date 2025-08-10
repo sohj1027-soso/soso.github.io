@@ -5,77 +5,97 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>이상형 월드컵</title>
 <style>
-  body { font-family: '맑은 고딕', Arial, sans-serif; max-width: 480px; margin: 20px auto; padding: 10px; text-align: center; }
-  h1 { margin-bottom: 20px; }
-  .images { display: flex; justify-content: space-around; margin-bottom: 20px; }
+  body { font-family: 'Noto Sans KR', Arial, sans-serif; max-width: 500px; margin: 30px auto; padding: 20px; text-align: center; background: #f4f7fd; }
+  h1 { margin-bottom: 20px; color: #3b4b69; }
+  .images { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px; }
   .images img {
-    width: 45%;
+    width: 48%;
     cursor: pointer;
     border-radius: 8px;
-    border: 3px solid transparent;
+    border: 2px solid transparent;
     transition: border-color 0.3s;
   }
   .images img:hover {
-    border-color: #333;
+    border-color: #3b4b69;
   }
-  #result {
-    font-weight: bold;
-    font-size: 20px;
-    margin-top: 20px;
-  }
-  button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    cursor: pointer;
-  }
+  #result { margin-top: 20px; font-weight: bold; font-size: 1.2rem; color: #3b4b69; }
+  button { margin-top: 20px; padding: 10px 15px; font-size: 1rem; cursor: pointer; border: none; background: #3b4b69; color: white; border-radius: 6px; }
 </style>
 </head>
 <body>
 
-<h1>이상형 월드컵</h1>
-
-<div class="images" id="choices">
-  <img src="https://via.placeholder.com/200x200?text=1" alt="1" onclick="choose(0)" />
-  <img src="https://via.placeholder.com/200x200?text=2" alt="2" onclick="choose(1)" />
-</div>
-
+<h1>이상형 월드컵 – 16강</h1>
+<div class="images" id="choices"></div>
 <div id="result"></div>
-
 <button onclick="location.href='index.html'">← 메인으로 돌아가기</button>
 
 <script>
 const items = [
-  "사람 A",
-  "사람 B",
-  "사람 C",
-  "사람 D"
+  { name: "아이유", img: "https://commons.wikimedia.org/wiki/File:IU_posing_for_Marie_Claire_Korea_March_2022_issue_03.jpg" },
+  { name: "송혜교", img: "https://via.placeholder.com/300?text=Song+Hye+Kyo" },
+  { name: "전지현", img: "https://via.placeholder.com/300?text=Jun+Ji+Hyun" },
+  { name: "김태리", img: "https://via.placeholder.com/300?text=Kim+Tae+Ri" },
+  { name: "박신혜", img: "https://via.placeholder.com/300?text=Park+Shin+Hye" },
+  { name: "배수지", img: "https://via.placeholder.com/300?text=Bae+Suzy" },
+  { name: "신민아", img: "https://via.placeholder.com/300?text=Shin+Min+a" },
+  { name: "김고은", img: "https://via.placeholder.com/300?text=Kim+GoEun" },
+  { name: "손예진", img: "https://via.placeholder.com/300?text=Son+YeJin" },
+  { name: "김태희", img: "https://via.placeholder.com/300?text=Kim+TaeHee" },
+  { name: "김다미", img: "https://via.placeholder.com/300?text=Kim+Dami" },
+  { name: "박소담", img: "https://via.placeholder.com/300?text=Park+SoDam" },
+  { name: "한소희", img: "https://via.placeholder.com/300?text=Han+Sohee" },
+  { name: "하지원", img: "https://via.placeholder.com/300?text=Ha+JiWon" },
+  { name: "김지원", img: "https://via.placeholder.com/300?text=Kim+JiWon" },
+  { name: "한효주", img: "https://via.placeholder.com/300?text=Han+HyoJoo" }
 ];
 
-let round = 0;
-let selected = [];
+let currentRound = 0;
+let brackets = [...items]; // 초기 16강 배열
+let winners = [];
 
-function choose(index) {
-  selected.push(items[round * 2 + index]);
-  round++;
-  if (round >= items.length / 2) {
-    showResult();
-  } else {
-    showNextRound();
-  }
-}
-
-function showNextRound() {
+function showRound() {
   const choicesDiv = document.getElementById("choices");
-  choicesDiv.innerHTML = `
-    <img src="https://via.placeholder.com/200x200?text=${round*2+1}" alt="${round*2+1}" onclick="choose(0)" />
-    <img src="https://via.placeholder.com/200x200?text=${round*2+2}" alt="${round*2+2}" onclick="choose(1)" />
-  `;
+  choicesDiv.innerHTML = "";
+  document.getElementById("result").textContent = "";
+
+  if (brackets.length === 1) {
+    document.getElementById("result").textContent = `당신의 이상형은: ${brackets[0].name}님입니다!`;
+    return;
+  }
+
+  const a = brackets[0];
+  const b = brackets[1];
+
+  const imgA = document.createElement("img");
+  imgA.src = a.img;
+  imgA.alt = a.name;
+  imgA.onclick = () => selectWinner(a);
+
+  const imgB = document.createElement("img");
+  imgB.src = b.img;
+  imgB.alt = b.name;
+  imgB.onclick = () => selectWinner(b);
+
+  choicesDiv.appendChild(imgA);
+  choicesDiv.appendChild(imgB);
 }
 
-function showResult() {
-  document.getElementById("choices").style.display = "none";
-  document.getElementById("result").textContent = "당신의 이상형은: " + selected[0] + "!";
+function selectWinner(chosen) {
+  winners.push(chosen);
+  brackets.shift();
+  brackets.shift();
+
+  if (brackets.length === 0) {
+    // 다음 라운드로
+    brackets = [...winners];
+    winners = [];
+  }
+
+  showRound();
 }
+
+// 초기 스타트
+showRound();
 </script>
 
 </body>
