@@ -9,18 +9,35 @@
   h1 { margin-bottom: 10px; color: #ff83ac; }
   h2 { margin-bottom: 20px; color: #555; font-weight: normal; }
   .images { display: flex; justify-content: space-around; margin-bottom: 20px; }
-  .images img {
-    width: 45%;
+  .choice {
     cursor: pointer;
     border-radius: 8px;
     border: 3px solid transparent;
     transition: transform 0.3s, border-color 0.3s;
+    width: 45%;
   }
-  .images img:hover {
+  .choice:hover {
     border-color: #fb8aaf;
     transform: scale(1.05);
   }
-  #result { font-weight: bold; font-size: 20px; margin-top: 20px; }
+  .choice img {
+    width: 100%;
+    border-radius: 8px;
+    display: block;
+  }
+  .name {
+    margin-top: 8px;
+    font-weight: bold;
+    color: #333;
+    font-size: 1.1rem;
+  }
+  #roundInfo {
+    font-weight: bold;
+    font-size: 18px;
+    color: #f86e9c;
+    margin-bottom: 10px;
+  }
+  #result { font-weight: bold; font-size: 20px; margin-top: 20px; color: #d6336c; }
   button {
     margin-top: 20px;
     padding: 10px 20px;
@@ -37,6 +54,7 @@
 <h1>여자 배우 이상형 월드컵</h1>
 <h2>당신의 이상형을 선택하세요!</h2>
 
+<div id="roundInfo"></div>
 <div class="images" id="choices"></div>
 <div id="result"></div>
 
@@ -63,31 +81,48 @@ function startTournament(items) {
   let brackets = [...items];
   let winners = [];
 
+  function getRoundName(len) {
+    switch(len) {
+      case 16: return "16강";
+      case 8: return "8강";
+      case 4: return "4강";
+      case 2: return "결승";
+      default: return "";
+    }
+  }
+
   function showRound() {
     const choicesDiv = document.getElementById("choices");
+    const roundInfoDiv = document.getElementById("roundInfo");
+    const resultDiv = document.getElementById("result");
+
     choicesDiv.innerHTML = "";
-    document.getElementById("result").textContent = "";
+    resultDiv.textContent = "";
 
     if (brackets.length === 1) {
-      document.getElementById("result").textContent =
+      roundInfoDiv.textContent = "";
+      resultDiv.textContent =
         `🏆 당신의 이상형은: ${brackets[0].name}님입니다!`;
       choicesDiv.innerHTML = `<img src="${brackets[0].img}" alt="${brackets[0].name}" style="width:80%; border-radius:8px;">`;
       return;
     }
 
+    roundInfoDiv.textContent = `${getRoundName(brackets.length)} 대결`;
+
     const [a, b] = brackets;
-    const imgA = document.createElement("img");
-    imgA.src = a.img;
-    imgA.alt = a.name;
-    imgA.onclick = () => selectWinner(a);
 
-    const imgB = document.createElement("img");
-    imgB.src = b.img;
-    imgB.alt = b.name;
-    imgB.onclick = () => selectWinner(b);
+    const choiceA = document.createElement("div");
+    choiceA.className = "choice";
+    choiceA.onclick = () => selectWinner(a);
+    choiceA.innerHTML = `<img src="${a.img}" alt="${a.name}"><div class="name">${a.name}</div>`;
 
-    choicesDiv.appendChild(imgA);
-    choicesDiv.appendChild(imgB);
+    const choiceB = document.createElement("div");
+    choiceB.className = "choice";
+    choiceB.onclick = () => selectWinner(b);
+    choiceB.innerHTML = `<img src="${b.img}" alt="${b.name}"><div class="name">${b.name}</div>`;
+
+    choicesDiv.appendChild(choiceA);
+    choicesDiv.appendChild(choiceB);
   }
 
   function selectWinner(chosen) {
