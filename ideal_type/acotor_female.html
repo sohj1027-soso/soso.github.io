@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>여자 배우 이상형 월드컵</title>
+<style>
+  body { font-family: '맑은 고딕', Arial, sans-serif; max-width: 500px; margin: 20px auto; padding: 10px; text-align: center; }
+  h1 { margin-bottom: 10px; color: #ff4081; }
+  h2 { margin-bottom: 20px; color: #555; font-weight: normal; }
+  .images { display: flex; justify-content: space-around; margin-bottom: 20px; }
+  .images img {
+    width: 45%;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 3px solid transparent;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .images img:hover {
+    border-color: #ff4081;
+    transform: scale(1.05);
+  }
+  #result { font-weight: bold; font-size: 20px; margin-top: 20px; }
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    background: #ff4081;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<h1>여자 배우 이상형 월드컵</h1>
+<h2>마음에 드는 배우를 선택하세요!</h2>
+
+<div class="images" id="choices"></div>
+<div id="result"></div>
+
+<button onclick="location.href='index.html'">← 메인으로 돌아가기</button>
+
+<script>
+  fetch("actor_female_list.php") // 같은 폴더에 있으므로 그냥 파일명
+    .then(res => res.json())
+    .then(files => {
+      if (!Array.isArray(files) || files.length === 0) {
+        document.getElementById("result").textContent = "이미지를 불러올 수 없습니다.";
+        return;
+      }
+      // 16명 랜덤 선택
+      const shuffled = files.sort(() => Math.random() - 0.5).slice(0, 16);
+      const items = shuffled.map(file => ({
+        name: file.replace(/\.[^/.]+$/, ""), // 확장자 제거
+        img: `actor_female_image/${file}` // 같은 폴더 안의 이미지 경로
+      }));
+      startTournament(items);
+    });
+
+function startTournament(items) {
+  let brackets = [...items];
+  let winners = [];
+
+  function showRound() {
+    const choicesDiv = document.getElementById("choices");
+    choicesDiv.innerHTML = "";
+    document.getElementById("result").textContent = "";
+
+    if (brackets.length === 1) {
+      document.getElementById("result").textContent =
+        `🏆 당신의 이상형은: ${brackets[0].name}님입니다!`;
+      choicesDiv.innerHTML = `<img src="${brackets[0].img}" alt="${brackets[0].name}" style="width:80%; border-radius:8px;">`;
+      return;
+    }
+
+    const [a, b] = brackets;
+    const imgA = document.createElement("img");
+    imgA.src = a.img;
+    imgA.alt = a.name;
+    imgA.onclick = () => selectWinner(a);
+
+    const imgB = document.createElement("img");
+    imgB.src = b.img;
+    imgB.alt = b.name;
+    imgB.onclick = () => selectWinner(b);
+
+    choicesDiv.appendChild(imgA);
+    choicesDiv.appendChild(imgB);
+  }
+
+  function selectWinner(chosen) {
+    winners.push(chosen);
+    brackets.shift();
+    brackets.shift();
+
+    if (brackets.length === 0) {
+      brackets = [...winners];
+      winners = [];
+    }
+    showRound();
+  }
+
+  showRound();
+}
+</script>
+
+</body>
+</html>
