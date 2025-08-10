@@ -6,7 +6,7 @@
 <title>여자 배우 이상형 월드컵</title>
 <style>
   body { font-family: '맑은 고딕', Arial, sans-serif; max-width: 500px; margin: 20px auto; padding: 10px; text-align: center; }
-  h1 { margin-bottom: 10px; color: #ff4081; }
+  h1 { margin-bottom: 10px; color: #ff83ac; }
   h2 { margin-bottom: 20px; color: #555; font-weight: normal; }
   .images { display: flex; justify-content: space-around; margin-bottom: 20px; }
   .images img {
@@ -17,7 +17,7 @@
     transition: transform 0.3s, border-color 0.3s;
   }
   .images img:hover {
-    border-color: #ff4081;
+    border-color: #fb8aaf;
     transform: scale(1.05);
   }
   #result { font-weight: bold; font-size: 20px; margin-top: 20px; }
@@ -25,7 +25,7 @@
     margin-top: 20px;
     padding: 10px 20px;
     border: none;
-    background: #ff4081;
+    background: #f86e9c;
     color: white;
     border-radius: 5px;
     cursor: pointer;
@@ -35,12 +35,12 @@
 <body>
 
 <h1>여자 배우 이상형 월드컵</h1>
-<h2>마음에 드는 배우를 선택하세요!</h2>
+<h2>당신의 이상형을 선택하세요!</h2>
 
 <div class="images" id="choices"></div>
 <div id="result"></div>
 
-<button onclick="location.href='index.html'">← 메인으로 돌아가기</button>
+<button onclick="location.href='../index.html'">← 메인으로 돌아가기</button>
 
 <script>
   fetch("actor_female_list.php") // 같은 폴더에 있으므로 그냥 파일명
